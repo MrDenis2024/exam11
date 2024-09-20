@@ -8,15 +8,18 @@ import App from './App';
 import {ToastContainer} from 'react-toastify';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {store} from '../app/store';
+import {persistor, store} from './app/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer position="bottom-right" />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PersistGate persistor={persistor}>
+        <ToastContainer position="bottom-right" />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
 );
