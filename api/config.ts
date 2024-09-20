@@ -1,6 +1,5 @@
 import {CorsOptions} from 'cors';
 
-
 const corsWhiteList = ['http://localhost:5173'];
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
