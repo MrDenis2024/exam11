@@ -1,17 +1,21 @@
-import {Product} from '../types';
+import {Product, ProductWitchCategory} from '../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {createProduct, fetchProducts} from './productsThunks';
+import {createProduct, fetchOneProduct, fetchProducts} from './productsThunks';
 
 export interface ProductsState {
   products: Product[];
   productsFetching: boolean;
   productCreating: boolean;
+  oneProduct: ProductWitchCategory | null,
+  oneProductLoading: boolean,
 }
 
 const initialState: ProductsState = {
   products: [],
   productsFetching: false,
   productCreating: false,
+  oneProduct: null,
+  oneProductLoading: false,
 };
 
 export const productsSlice = createSlice({
@@ -35,11 +39,23 @@ export const productsSlice = createSlice({
     }).addCase(createProduct.rejected, (state:ProductsState) => {
       state.productCreating = false;
     });
+
+    builder.addCase(fetchOneProduct.pending, (state: ProductsState) => {
+      state.oneProductLoading = true;
+      state.oneProduct = null;
+    }).addCase(fetchOneProduct.fulfilled, (state: ProductsState, {payload: product}) => {
+      state.oneProductLoading = false;
+      state.oneProduct = product;
+    }).addCase(fetchOneProduct.rejected, (state: ProductsState) => {
+      state.oneProductLoading = false;
+    });
   },
   selectors: {
     selectProducts: (state: ProductsState) => state.products,
     selectProductsFetching: (state: ProductsState) => state.productsFetching,
     selectProductCreating: (state: ProductsState) => state.productCreating,
+    selectOneProduct: (state: ProductsState) => state.oneProduct,
+    selectOneProductLoading: (state: ProductsState) => state.oneProductLoading,
   },
 });
 
@@ -48,4 +64,6 @@ export const {
   selectProducts,
   selectProductsFetching,
   selectProductCreating,
+  selectOneProduct,
+  selectOneProductLoading,
 } = productsSlice.selectors;

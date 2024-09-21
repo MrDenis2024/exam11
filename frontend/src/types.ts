@@ -41,10 +41,7 @@ export interface Category {
 
 export interface Product {
   _id: string;
-  category: {
-    _id: string;
-    title: string;
-  };
+  category: string;
   user: string;
   title: string;
   description: string;
@@ -58,4 +55,21 @@ export interface ProductMutation {
   image: File | null;
   category: string;
   price: string;
+}
+
+export interface ProductWitchCategory {
+  _id: string;
+  category: {
+    _id: string;
+    title: string;
+  };
+  user: {
+    _id: string;
+    name: string;
+    phone: number;
+  };
+  title: string;
+  description: string;
+  price: number;
+  image: string;
 }

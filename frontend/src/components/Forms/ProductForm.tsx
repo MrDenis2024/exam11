@@ -76,17 +76,19 @@ const ProductForm: React.FC<Props> = ({onSubmit, loading}) => {
                  onChange={inputChangeHandler} required/>
         </div>
         <div className="form-group mb-3">
-          <label htmlFor="category" className="mb-1">Category:</label>
           {categoriesLoading ? (
             <div><Spinner/></div>
           ) : (
-            <select className="form-select" id='category' name='category' onChange={inputChangeHandler}
-                    value={product.category} required>
-              <option value='' disabled={product.category !== ''}>Select category</option>
-              {categories.map((category) => (
-                <option key={category._id} value={category._id}>{category.title}</option>
-              ))}
-            </select>
+            <>
+              <label htmlFor='category' className="mb-1">Category:</label>
+              <select className="form-select" id='category' name='category' onChange={inputChangeHandler}
+                      value={product.category} required>
+                <option value='' disabled={product.category !== ''}>Select category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>{category.title}</option>
+                ))}
+              </select>
+            </>
           )}
         </div>
       </div>

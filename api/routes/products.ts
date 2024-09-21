@@ -15,7 +15,7 @@ productsRouter.get('/', async (req, res, next) => {
       filter.category = category;
     }
 
-    const products = await Product.find(filter).populate('category');
+    const products = await Product.find(filter);
     return res.send(products);
   } catch (error) {
     return next(error);
@@ -24,11 +24,13 @@ productsRouter.get('/', async (req, res, next) => {
 
 productsRouter.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id).populate('category').populate('user', 'name phone token');
+    const product = await Product.findById(req.params.id).populate('category').populate('user', 'name phone');
 
     if(product === null) {
       return res.status(404).send({error: 'Product not found'});
     }
+
+    return res.send(product);
   } catch (error) {
     return next(error);
   }
@@ -36,12 +38,17 @@ productsRouter.get('/:id', async (req, res, next) => {
 
 productsRouter.post('/', imagesUpload.single('image'), auth, async (req: RequestWithUser, res, next) => {
   try {
+    const category = await Category.findById(req.body.category);
+    if(!category) {
+      return res.status(400).send({error: 'Category not found'});
+    }
+
     const newProduct = new Product({
       user: req.user?._id,
       category: req.body.category,
       title: req.body.title,
       description: req.body.description,
-      image: req.file ? req.file.filename : null,
+      image: req.file && req.file.filename,
       price: parseFloat(req.body.price),
     });
 

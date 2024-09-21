@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {Product, ProductMutation} from '../types';
+import {Product, ProductMutation, ProductWitchCategory} from '../types';
 import axiosApi from '../axiosApi';
 import {RootState} from '../app/store';
 
@@ -20,4 +20,9 @@ export const createProduct = createAsyncThunk<void, ProductMutation, {state: Roo
   formData.append('price', productMutation.price);
 
   await axiosApi.post('/products', formData, {headers: {'Authorization' : `Bearer ${token}`}});
+});
+
+export const fetchOneProduct = createAsyncThunk<ProductWitchCategory, string>('products/fetchOne', async (id) => {
+  const {data: product} = await axiosApi.get<ProductWitchCategory>(`/products/${id}`);
+  return product;
 });
