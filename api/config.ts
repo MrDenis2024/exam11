@@ -1,4 +1,7 @@
 import {CorsOptions} from 'cors';
+import path from 'path';
+
+const rootPath = __dirname;
 
 const corsWhiteList = ['http://localhost:5173'];
 const corsOptions: CorsOptions = {
@@ -12,8 +15,10 @@ const corsOptions: CorsOptions = {
 };
 
 const config = {
+  rootPath,
+  publicPath: path.join(rootPath, 'public'),
   corsOptions,
-  database: 'mongodb://localhost/test',
+  database: 'mongodb://localhost/market',
 };
 
 export default config;
