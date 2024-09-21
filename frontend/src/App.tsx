@@ -3,10 +3,13 @@ import Layout from './components/Layout/Layout';
 import {Route, Routes} from 'react-router-dom';
 import Login from './containers/Login/Login';
 import Register from './containers/Register/Register';
+import Home from './containers/Home/Home';
 
 const App = () => (
   <Layout>
     <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/categories/:categoryId' element={<Home />}/>
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
       <Route path='*' element={<div className="text-center mt-5"><strong>Данной страницы не найдено вернитесь

@@ -2,15 +2,19 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import {usersReducer} from '../store/usersSlice';
+import {categoriesReducer} from '../store/categoriesSlice';
+import {productsReducer} from '../store/productsSlice';
 
 const usersPersistConfig = {
-  key: 'test:users',
+  key: 'market:users',
   storage,
   whitelist: ['user'],
 };
 
 const rootReducer = combineReducers({
-  users: persistReducer(usersPersistConfig, usersReducer)
+  users: persistReducer(usersPersistConfig, usersReducer),
+  categories: categoriesReducer,
+  products: productsReducer,
 });
 
 export const store = configureStore({

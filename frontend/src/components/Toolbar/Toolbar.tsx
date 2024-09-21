@@ -9,7 +9,7 @@ const Toolbar = () => {
   return (
     <nav className='navbar navbar-dark bg-success'>
       <div className='container'>
-        <NavLink to='/' className='navbar-brand'>Test</NavLink>
+        <NavLink to='/' className='navbar-brand'>Flea market</NavLink>
         {user ? (
           <UserMenu user={user} />
         ) : (

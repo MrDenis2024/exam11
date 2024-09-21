@@ -15,7 +15,7 @@ productsRouter.get('/', async (req, res, next) => {
       filter.category = category;
     }
 
-    const products = await Category.find(filter);
+    const products = await Product.find(filter).populate('category');
     return res.send(products);
   } catch (error) {
     return next(error);

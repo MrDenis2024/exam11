@@ -1,12 +1,16 @@
 export interface User {
   _id: string;
   username: string;
+  name: string;
+  phone: number;
   token: string;
 }
 
 export interface RegisterMutation {
   username: string;
   password: string;
+  name: string;
+  phone: string;
 }
 
 export interface LoginMutation {
@@ -28,4 +32,22 @@ export interface ValidationError {
 
 export interface GlobalError {
   error: string;
+}
+
+export interface Category {
+  _id: string;
+  title: string;
+}
+
+export interface Product {
+  _id: string;
+  category: {
+    _id: string;
+    title: string;
+  };
+  user: string;
+  title: string;
+  description: string;
+  price: number;
+  image: string;
 }

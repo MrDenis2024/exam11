@@ -16,6 +16,8 @@ const Register = () => {
   const [state, setState] = useState<RegisterMutation>({
     username: '',
     password: '',
+    name: '',
+    phone: ''
   });
 
   const getFieldError = (fieldName: string) => {
@@ -65,6 +67,30 @@ const Register = () => {
         {getFieldError('password') && (
           <div className='invalid-feedback'>
             {getFieldError('password')}
+          </div>
+        )}
+      </div>
+      <div className='form-group mb-3'>
+        <div className={`${getFieldError('name') ? 'is-invalid' : ''}`}>
+          <label htmlFor='name'>Display name</label>
+          <input type='text' name='name' id='name' className='form-control' value={state.name}
+                 onChange={inputChangeHandler} required/>
+        </div>
+        {getFieldError('name') && (
+          <div className='invalid-feedback'>
+            {getFieldError('name')}
+          </div>
+        )}
+      </div>
+      <div className='form-group mb-3'>
+        <div className={`${getFieldError('phone') ? 'is-invalid' : ''}`}>
+          <label htmlFor='phone'>Phone</label>
+          <input type='number' name='phone' id='phone' className='form-control' value={state.phone}
+                 onChange={inputChangeHandler} required/>
+        </div>
+        {getFieldError('phone') && (
+          <div className='invalid-feedback'>
+            {getFieldError('phone')}
           </div>
         )}
       </div>
