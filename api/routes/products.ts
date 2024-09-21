@@ -41,10 +41,11 @@ productsRouter.post('/', imagesUpload.single('image'), auth, async (req: Request
       category: req.body.category,
       title: req.body.title,
       description: req.body.description,
-      image: req.file && req.file.filename,
+      image: req.file ? req.file.filename : null,
       price: parseFloat(req.body.price),
     });
 
+    await newProduct.save();
     return res.send(newProduct);
   } catch (error) {
     if(error instanceof mongoose.Error.ValidationError) {

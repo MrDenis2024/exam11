@@ -1,6 +1,6 @@
 const Spinner = () => {
   return (
-    <div className='spinner-border text-primary text-center'>
+    <div className='spinner-border text-primary'>
       <span className='visually-hidden'>Loading...</span>
     </div>
   );

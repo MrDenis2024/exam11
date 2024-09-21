@@ -31,7 +31,9 @@ const Home = () => {
 
   if(productsFetching) {
     content = (
-      <Spinner />
+      <div className='mx-auto'>
+        <Spinner />
+      </div>
     );
   } else if (products.length > 0) {
     content = products.map((product) => (
@@ -55,11 +57,11 @@ const Home = () => {
     <div className='mt-5 d-flex gap-4'>
       <div className='col-3'>
         <CategoriesMenu categories={categories} />
+        {categoriesFetching && (<div className='text-center'><Spinner /></div>)}
       </div>
       <div className='d-flex flex-column col-8'>
         <h4>{pageTitle}</h4>
         <div className='d-flex gap-3 flex-wrap'>
-          {productsFetching && (<Spinner />)}
           {content}
         </div>
       </div>

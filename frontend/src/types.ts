@@ -51,3 +51,11 @@ export interface Product {
   price: number;
   image: string;
 }
+
+export interface ProductMutation {
+  title: string;
+  description: string;
+  image: File | null;
+  category: string;
+  price: string;
+}

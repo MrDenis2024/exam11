@@ -2,6 +2,7 @@ import React from 'react';
 import {User} from '../../types';
 import {useAppDispatch} from '../../app/hook';
 import {logout} from '../../store/usersThunks';
+import {NavLink} from 'react-router-dom';
 
 interface Props {
   user: User;
@@ -20,6 +21,9 @@ const UserMenu: React.FC<Props> = ({user}) => {
         Hello, {user.username}
       </button>
       <ul className="dropdown-menu">
+        <li>
+          <NavLink to="/new-product" className="dropdown-item">Add new product</NavLink>
+        </li>
         <li>
           <hr className="dropdown-divider"/>
         </li>

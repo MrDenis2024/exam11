@@ -10,7 +10,7 @@ usersRouter.post('/', async (req, res, next) => {
       username: req.body.username,
       password: req.body.password,
       name: req.body.name,
-      phone: req.body.phone,
+      phone: parseFloat(req.body.phone),
     });
     newUser.generateToken();
     await newUser.save();
