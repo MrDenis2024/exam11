@@ -57,7 +57,7 @@ const Home = () => {
     <div className='mt-5 d-flex gap-4'>
       <div className='col-3'>
         <CategoriesMenu categories={categories} />
-        {categoriesFetching && (<div className='text-center'><Spinner /></div>)}
+        {categoriesFetching && categories.length === 0 && (<div className='text-center'><Spinner /></div>)}
       </div>
       <div className='d-flex flex-column col-8'>
         <h4>{pageTitle}</h4>

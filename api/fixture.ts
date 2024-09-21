@@ -65,6 +65,13 @@ const run = async () => {
     description: 'Тип холодильника: С нижней холодильной камерой. Общий объем 350л. Высота: 185 см',
     image: 'fixtures/refreg.jpeg',
     price: 44000,
+  }, {
+    user: secondUser,
+    category: tv,
+    title: 'LED телевизор Haier 65 S2',
+    description: 'Диагональ экрана 65-165,1 см. Разрешение 3840х2160. Технология LED',
+    image: 'fixtures/secondtv.jpeg',
+    price: 68000,
   });
 
   await db.close();

@@ -62,4 +62,24 @@ productsRouter.post('/', imagesUpload.single('image'), auth, async (req: Request
   }
 });
 
+productsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if(product === null) {
+      return res.status(404).send({error: 'Product not found'});
+    }
+
+    if(!product.user.equals(req.user?._id)) {
+      return res.status(403).send({error: 'You cannot delete this product'});
+    }
+
+    await Product.deleteOne({_id: req.params.id});
+
+    return res.send({message: 'Task deleted successfully'});
+  } catch (error) {
+    return next(error);
+  }
+});
+
 export default productsRouter;

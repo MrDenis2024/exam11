@@ -30,7 +30,7 @@ const NewProducts = () => {
           <ProductForm onSubmit={onFormSubmit} loading={loading} />
         </>
       ) : (
-        <Navigate to='/login' />
+        <Navigate to='/register' />
       )}
     </>
   );

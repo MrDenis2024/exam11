@@ -1,13 +1,15 @@
-import {Product, ProductWitchCategory} from '../types';
+import {GlobalError, Product, ProductWitchCategory} from '../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {createProduct, fetchOneProduct, fetchProducts} from './productsThunks';
+import {createProduct, deleteProduct, fetchOneProduct, fetchProducts} from './productsThunks';
 
 export interface ProductsState {
   products: Product[];
   productsFetching: boolean;
   productCreating: boolean;
+  createError: GlobalError | null;
   oneProduct: ProductWitchCategory | null,
   oneProductLoading: boolean,
+  deleteLoading: boolean,
 }
 
 const initialState: ProductsState = {
@@ -16,6 +18,8 @@ const initialState: ProductsState = {
   productCreating: false,
   oneProduct: null,
   oneProductLoading: false,
+  deleteLoading: false,
+  createError: null,
 };
 
 export const productsSlice = createSlice({
@@ -34,10 +38,12 @@ export const productsSlice = createSlice({
 
     builder.addCase(createProduct.pending, (state: ProductsState) => {
       state.productCreating = true;
+      state.createError = null;
     }).addCase(createProduct.fulfilled, (state: ProductsState) => {
       state.productCreating = false;
-    }).addCase(createProduct.rejected, (state:ProductsState) => {
+    }).addCase(createProduct.rejected, (state:ProductsState, {payload: error}) => {
       state.productCreating = false;
+      state.createError = error || null;
     });
 
     builder.addCase(fetchOneProduct.pending, (state: ProductsState) => {
@@ -49,6 +55,14 @@ export const productsSlice = createSlice({
     }).addCase(fetchOneProduct.rejected, (state: ProductsState) => {
       state.oneProductLoading = false;
     });
+
+    builder.addCase(deleteProduct.pending, (state: ProductsState) => {
+      state.deleteLoading = true;
+    }).addCase(deleteProduct.fulfilled, (state: ProductsState) => {
+      state.deleteLoading = false;
+    }).addCase(deleteProduct.rejected, (state: ProductsState) => {
+      state.deleteLoading = false;
+    });
   },
   selectors: {
     selectProducts: (state: ProductsState) => state.products,
@@ -56,6 +70,8 @@ export const productsSlice = createSlice({
     selectProductCreating: (state: ProductsState) => state.productCreating,
     selectOneProduct: (state: ProductsState) => state.oneProduct,
     selectOneProductLoading: (state: ProductsState) => state.oneProductLoading,
+    selectDeleteLoading: (state: ProductsState) => state.deleteLoading,
+    selectCreateError: (state: ProductsState) => state.createError,
   },
 });
 
@@ -66,4 +82,6 @@ export const {
   selectProductCreating,
   selectOneProduct,
   selectOneProductLoading,
+  selectDeleteLoading,
+  selectCreateError
 } = productsSlice.selectors;

@@ -1,22 +1,38 @@
-import React, {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hook';
-import {selectOneProduct, selectOneProductLoading} from '../../store/productsSlice';
-import {fetchOneProduct} from '../../store/productsThunks';
+import {selectDeleteLoading, selectOneProduct, selectOneProductLoading} from '../../store/productsSlice';
+import {deleteProduct, fetchOneProduct} from '../../store/productsThunks';
 import Spinner from '../../components/Spinner/Spinner';
 import {API_URL} from '../../constants';
 import {selectUser} from '../../store/usersSlice';
+import {toast} from 'react-toastify';
+import ButtonSpinner from '../../components/Spinner/ButtonSpinner';
 
 const OneProduct = () => {
   const {id} = useParams() as {id: string};
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const product = useAppSelector(selectOneProduct);
   const productLoading = useAppSelector(selectOneProductLoading);
+  const deleteLoading = useAppSelector(selectDeleteLoading);
   const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchOneProduct(id));
   }, [dispatch, id]);
+
+  const removeProduct = async () => {
+    try {
+      if(window.confirm('Вы точно хотите удалить данны продукт?')) {
+        await dispatch(deleteProduct(id)).unwrap();
+        navigate('/');
+        toast.success('Product removal was successful');
+      }
+    } catch (e) {
+      toast.error('Product uninstall error successful');
+    }
+  };
 
   return (
     <div className='mt-5'>
@@ -46,7 +62,7 @@ const OneProduct = () => {
           </div>
           {user?._id === product.user._id && (
             <div>
-              <button className='btn btn-danger'>Delete product</button>
+              <button className='btn btn-danger' onClick={removeProduct} disabled={deleteLoading} >{deleteLoading && <ButtonSpinner />}Delete product</button>
             </div>
           )}
         </div>

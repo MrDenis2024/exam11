@@ -6,6 +6,7 @@ import {fetchCategories} from '../../store/categoriesThunks';
 import FileInput from './FileInput';
 import ButtonSpinner from '../Spinner/ButtonSpinner';
 import Spinner from '../Spinner/Spinner';
+import {selectCreateError} from '../../store/productsSlice';
 
 interface Props {
   onSubmit: (product: ProductMutation) => void;
@@ -16,6 +17,7 @@ const ProductForm: React.FC<Props> = ({onSubmit, loading}) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const categoriesLoading = useAppSelector(selectCategoriesFetching);
+  const error = useAppSelector(selectCreateError);
 
   const [product, setProduct] = useState<ProductMutation>({
     title: '',
@@ -56,6 +58,12 @@ const ProductForm: React.FC<Props> = ({onSubmit, loading}) => {
   return (
     <form className='mt-5 w-75 mx-auto border rounded-4 border-2 p-4' onSubmit={submitFormHandler}>
       <h4 className='mb-5 text-center'>Add new product</h4>
+      {error && (
+        <div className='alert alert-danger d-flex align-items-center'>
+          <i className="bi bi-exclamation-circle" style={{color: 'red'}}></i>
+          <p className='ms-2 mb-0'>{error.error}</p>
+        </div>
+      )}
       <div className='form-group mb-3'>
         <label htmlFor='title' className='mb-1'>Title:</label>
         <input type='text' name='title' id='title' className='form-control' value={product.title}
@@ -80,10 +88,10 @@ const ProductForm: React.FC<Props> = ({onSubmit, loading}) => {
             <div><Spinner/></div>
           ) : (
             <>
-              <label htmlFor='category' className="mb-1">Category:</label>
-              <select className="form-select" id='category' name='category' onChange={inputChangeHandler}
+              <label htmlFor="category" className="mb-1">Category:</label>
+              <select className="form-select" id="category" name="category" onChange={inputChangeHandler}
                       value={product.category} required>
-                <option value='' disabled={product.category !== ''}>Select category</option>
+                <option value="" disabled>Select category</option>
                 {categories.map((category) => (
                   <option key={category._id} value={category._id}>{category.title}</option>
                 ))}
