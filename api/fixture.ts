@@ -30,7 +30,7 @@ const run = async () => {
     username: 'Denis',
     password: '123',
     name: 'I.E. Denis',
-    phone: +996999809123,
+    phone: 996999809123,
   });
   firstUser.generateToken();
   await firstUser.save();
@@ -39,7 +39,7 @@ const run = async () => {
     username: 'Anton',
     password: '345',
     name: 'I.E. Anton',
-    phone: +996999812123,
+    phone: 996999812123,
   });
   secondUser.generateToken();
   await secondUser.save();

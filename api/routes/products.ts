@@ -76,7 +76,7 @@ productsRouter.delete('/:id', auth, async (req: RequestWithUser, res, next) => {
 
     await Product.deleteOne({_id: req.params.id});
 
-    return res.send({message: 'Task deleted successfully'});
+    return res.send({message: 'Product deleted successfully'});
   } catch (error) {
     return next(error);
   }
